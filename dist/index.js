@@ -29,7 +29,7 @@ function $parcel$interopDefault(a) {
 }
 var $c8de63f7539955a2$exports = {};
 
-$parcel$export($c8de63f7539955a2$exports, "ReactHookProvider", () => $4867e356d9e401b7$export$43bf47c9b398fb64);
+$parcel$export($c8de63f7539955a2$exports, "ReactStateHookProvider", () => $4867e356d9e401b7$export$43bf47c9b398fb64);
 $parcel$export($c8de63f7539955a2$exports, "useSharedSimpleHook", () => $bbcc0c0e6f09ab75$export$953116e2218f0e4a);
 
 

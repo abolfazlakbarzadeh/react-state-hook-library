@@ -8,7 +8,7 @@ function $parcel$export(e, n, v, s) {
 }
 var $f6df5ab02bec0b68$exports = {};
 
-$parcel$export($f6df5ab02bec0b68$exports, "ReactHookProvider", () => $190a8be343b4b13e$export$43bf47c9b398fb64);
+$parcel$export($f6df5ab02bec0b68$exports, "ReactStateHookProvider", () => $190a8be343b4b13e$export$43bf47c9b398fb64);
 $parcel$export($f6df5ab02bec0b68$exports, "useSharedSimpleHook", () => $ecfc1e9502cb4f54$export$953116e2218f0e4a);
 
 
