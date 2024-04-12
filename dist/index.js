@@ -29,17 +29,20 @@ function $parcel$interopDefault(a) {
 }
 var $c8de63f7539955a2$exports = {};
 
-$parcel$export($c8de63f7539955a2$exports, "ReactHookProvider", () => $4867e356d9e401b7$export$38866cc0218ba23e);
+$parcel$export($c8de63f7539955a2$exports, "ReactHookProvider", () => $4867e356d9e401b7$export$43bf47c9b398fb64);
 $parcel$export($c8de63f7539955a2$exports, "useSharedSimpleHook", () => $bbcc0c0e6f09ab75$export$953116e2218f0e4a);
 
 
 const $cc8bad687d39e902$var$updater = (state, key, value)=>{
-    if (!state.current) {
-        console.error("Current state is undefined!");
-        return state;
-    }
     // check if content type of key is string or object
-    if (typeof key === "string") {
+    if (typeof key !== "object") {
+        // if passed payload is a state updater function, then invoke it and update state
+        if (typeof key === "function") {
+            const newState = key(state.current);
+            state.current = newState;
+            return state;
+        }
+        // if there is no specific value as value payload, then set key's value as new state
         if (!value) {
             // @ts-ignore
             state.current = key;
@@ -66,6 +69,7 @@ const $c921148f76e1433b$export$d728221901039fad = {
 
 
 var $8f471fbcc86583bb$export$2e2bcd8739ae039 = (state, dispatch)=>{
+    // this approach can help us to have helper functions to manage complex states
     return {
         update: (key, value)=>{
             dispatch({
@@ -82,17 +86,18 @@ var $8f471fbcc86583bb$export$2e2bcd8739ae039 = (state, dispatch)=>{
 
 
 
-const $4867e356d9e401b7$export$1a1248661f5db76a = /*#__PURE__*/ (0, $8zHUo$react.createContext)();
-const $4867e356d9e401b7$export$38866cc0218ba23e = ({ children: children, initialState: initialState })=>{
+const $4867e356d9e401b7$export$55cddbf7a8528541 = /*#__PURE__*/ (0, $8zHUo$react.createContext)();
+const $4867e356d9e401b7$export$43bf47c9b398fb64 = ({ children: children, initialState: initialState })=>{
     const [state, dispatch] = (0, $8zHUo$react.useReducer)((state, dispatch)=>(0, $cc8bad687d39e902$export$2e2bcd8739ae039)((0, ($parcel$interopDefault($8zHUo$lodash))).cloneDeep(state), dispatch), {
         current: {}
     }, ()=>({
-            current: Object.assign({}, (0, $c921148f76e1433b$export$232ca1d7c88c0dfc), initialState)
+            // Check if there is an initial state of the provider
+            current: Object.keys((0, $c921148f76e1433b$export$232ca1d7c88c0dfc)).length || initialState ? Object.assign({}, (0, $c921148f76e1433b$export$232ca1d7c88c0dfc), initialState) : undefined
         }));
     const functions = (0, $8zHUo$react.useMemo)(()=>(0, $8f471fbcc86583bb$export$2e2bcd8739ae039)(state, dispatch), [
         state
     ]);
-    return /*#__PURE__*/ (0, $8zHUo$reactjsxdevruntime.jsxDEV)($4867e356d9e401b7$export$1a1248661f5db76a.Provider, {
+    return /*#__PURE__*/ (0, $8zHUo$reactjsxdevruntime.jsxDEV)($4867e356d9e401b7$export$55cddbf7a8528541.Provider, {
         value: {
             state: state.current,
             functions: functions
@@ -100,7 +105,7 @@ const $4867e356d9e401b7$export$38866cc0218ba23e = ({ children: children, initial
         children: children
     }, void 0, false, {
         fileName: "src/provider/provider.tsx",
-        lineNumber: 32,
+        lineNumber: 38,
         columnNumber: 5
     }, undefined);
 };
@@ -111,14 +116,15 @@ const $4867e356d9e401b7$export$38866cc0218ba23e = ({ children: children, initial
 
 
 const $bbcc0c0e6f09ab75$export$953116e2218f0e4a = (value)=>{
-    const context = (0, $8zHUo$react.useContext)((0, $4867e356d9e401b7$export$1a1248661f5db76a));
+    const context = (0, $8zHUo$react.useContext)((0, $4867e356d9e401b7$export$55cddbf7a8528541));
     if (!context) throw Error("Please make sure you wrap your component that uses the shared mode hook with the shared mode hook provider.");
     (0, $8zHUo$react.useEffect)(()=>{
-        if (value) context.functions.update(value);
+        if (typeof value != "undefined") context.functions.update(value);
     }, []);
     return [
         context.state,
-        context.functions.update
+        context.functions.update,
+        context.functions
     ];
 };
 

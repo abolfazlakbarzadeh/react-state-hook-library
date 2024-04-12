@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { ReactHookContext } from "../provider/provider";
+import { ReactStateHookContext } from "../provider/provider";
 import { IUseSharedStateHook } from "./types.d";
 
 export const useSharedSimpleHook: IUseSharedStateHook = (value) => {
-  const context = useContext(ReactHookContext);
+  const context = useContext(ReactStateHookContext);
 
   if (!context) {
     throw Error(
@@ -11,8 +11,8 @@ export const useSharedSimpleHook: IUseSharedStateHook = (value) => {
     );
   }
   useEffect(() => {
-    if (value) context.functions.update(value);
+    if (typeof value != "undefined") context.functions.update(value);
   }, []);
 
-  return [context.state, context.functions.update];
+  return [context.state as any, context.functions.update, context.functions];
 };

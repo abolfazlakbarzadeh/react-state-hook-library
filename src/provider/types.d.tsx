@@ -4,9 +4,11 @@ import functions from "./functions";
 
 // Provider TSX
 export interface IReactHookProviderProps {
-  initialState?: {
-    [k: string]: any;
-  };
+  initialState?:
+    | {
+        [k: string]: any;
+      }
+    | any;
 }
 
 export type IReactHookProvider = FC<PropsWithChildren<IReactHookProviderProps>>;

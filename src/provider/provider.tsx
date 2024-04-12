@@ -11,9 +11,9 @@ import { INTIAL_STATE } from "./constants";
 import _ from "lodash";
 
 // @ts-ignore
-export const ReactHookContext = createContext<IProviderContext>();
+export const ReactStateHookContext = createContext<IProviderContext>();
 
-export const ReactHookProvider: IReactHookProvider = ({
+export const ReactStateHookProvider: IReactHookProvider = ({
   children,
   initialState,
 }) => {
@@ -23,19 +23,25 @@ export const ReactHookProvider: IReactHookProvider = ({
   >(
     (state, dispatch) => reducer(_.cloneDeep(state), dispatch),
     { current: {} },
-    () => ({ current: Object.assign({}, INTIAL_STATE, initialState) })
+    () => ({
+      // Check if there is an initial state of the provider
+      current:
+        Object.keys(INTIAL_STATE).length || initialState
+          ? Object.assign({}, INTIAL_STATE, initialState)
+          : undefined,
+    })
   );
 
   const functions = useMemo(() => providerFunctions(state, dispatch), [state]);
 
   return (
-    <ReactHookContext.Provider
+    <ReactStateHookContext.Provider
       value={{
         state: state.current,
         functions,
       }}
     >
       {children}
-    </ReactHookContext.Provider>
+    </ReactStateHookContext.Provider>
   );
 };

@@ -1,12 +1,12 @@
 import { Dispatch, FC, PropsWithChildren } from "react";
 declare const INTIAL_STATE: {};
-declare const _default: (state: IProviderContext['state'], dispatch: Dispatch<IDispatchAction>) => {
+declare const _default: (state: IProviderContext["state"], dispatch: Dispatch<IDispatchAction>) => {
     update: (key: unknown, value?: unknown) => void;
 };
 interface IReactHookProviderProps {
     initialState?: {
         [k: string]: any;
-    };
+    } | any;
 }
 type IReactHookProvider = FC<PropsWithChildren<IReactHookProviderProps>>;
 type IState = {
@@ -23,8 +23,12 @@ interface IDispatchAction {
         value?: unknown;
     };
 }
-export const ReactHookProvider: IReactHookProvider;
-type IUseSharedStateHook = (state?: any) => [IState["current"], ReturnType<typeof functions>["update"]];
+export const ReactStateHookProvider: IReactHookProvider;
+type IUseSharedStateHook = <T = IState["current"]>(state?: T) => [
+    T,
+    (((state: ((state: T) => T) | T) => void) | ReturnType<typeof functions>["update"]),
+    ReturnType<typeof functions>
+];
 export const useSharedSimpleHook: IUseSharedStateHook;
 
 //# sourceMappingURL=types.d.ts.map
