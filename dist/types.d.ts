@@ -26,7 +26,7 @@ interface IDispatchAction {
 export const ReactStateHookProvider: IReactHookProvider;
 type IUseSharedStateHook = <T = IState["current"]>(state?: T) => [
     T,
-    (((state: ((state: T) => T) | T) => void) | ReturnType<typeof functions>["update"]),
+    (...props: Parameters<ReturnType<typeof functions>["update"]>) => void,
     ReturnType<typeof functions>
 ];
 export const useSharedSimpleHook: IUseSharedStateHook;
