@@ -18,5 +18,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "exclude": ["src/**/*.spec.tsx", "src/setupTests.tsx", "src/stories", "web"]
+  "exclude": ["src/**/*.spec.tsx", "web"]
 }

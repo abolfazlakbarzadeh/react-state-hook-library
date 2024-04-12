@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { IDispatchAction, IProviderContext } from "./types";
+import { IDispatchAction, IProviderContext } from "./types.d";
 import { ACTION_KEYS } from "./constants";
 
 export default (state: IProviderContext['state'], dispatch: Dispatch<IDispatchAction>) => {

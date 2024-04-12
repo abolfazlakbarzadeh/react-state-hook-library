@@ -1,5 +1,10 @@
 import React, { Reducer, createContext, useMemo, useReducer } from "react";
-import { IDispatchAction, IProviderContext, IReactHookProvider } from "./types";
+import {
+  IDispatchAction,
+  IProviderContext,
+  IReactHookProvider,
+  IState,
+} from "./types.d";
 import reducer from "./reducer";
 import providerFunctions from "./functions";
 import { INTIAL_STATE } from "./constants";
@@ -13,12 +18,12 @@ export const ReactHookProvider: IReactHookProvider = ({
   initialState,
 }) => {
   const [state, dispatch] = useReducer<
-    Reducer<IProviderContext["state"], IDispatchAction>,
-    IProviderContext["state"]
+    Reducer<IState, IDispatchAction>,
+    IState
   >(
     (state, dispatch) => reducer(_.cloneDeep(state), dispatch),
-    {},
-    () => Object.assign({}, INTIAL_STATE, initialState)
+    { current: {} },
+    () => ({ current: Object.assign({}, INTIAL_STATE, initialState) })
   );
 
   const functions = useMemo(() => providerFunctions(state, dispatch), [state]);
@@ -26,7 +31,7 @@ export const ReactHookProvider: IReactHookProvider = ({
   return (
     <ReactHookContext.Provider
       value={{
-        state,
+        state: state.current,
         functions,
       }}
     >
